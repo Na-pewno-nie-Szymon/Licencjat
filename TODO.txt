@@ -1,0 +1,53 @@
+. Jeśli chce Pan zacząć coś robić to pierwsza rzecz to trzeba zbudować tę macierz prawdopodobieństwa wymiany kodonów.
+
+ 
+
+Czyli Jak weźmie pan kod genetyczny to np. 
+aminokwas Tryptofan jest kodowany jednym kodonem:
+
+ 
+
+UGA
+
+ 
+
+Jak zrobi się wszystkie możliwe jednozankowe wariacje 
+tego ciągu znaków to dostajemy 9 kodonów:
+
+ 
+
+CGA – kodujący aminokwas arginina
+
+AGA -  kodujący aminokwas arginina
+
+GGA – kodujący aminokwas glicyna
+
+UAA – kodon STOP
+
+UCA – kodujący aminokwas seryna
+
+UUA – kodujący aminokwas leucyna
+
+UGA – kodon STOP
+
+UGC – kodujący amininokwas cysteina
+
+UGU – kodujący aminokwas cysteina
+
+ 
+
+ 
+
+Z tego powstaje taka tabela zliczeń (prawdopodobieństwa) opsujący jakie jest prawdopodobieństwo wymiany aminokwau A na aminokwas B w wyniku punktowej mutacji w kodonie kodującym aminokwas A.
+
+ 
+    ARG CYS GLY LEU SER STOP
+TRP 2/9 2/9 1/9 1/9 1/9 2/9
+
+ 
+
+Jeśli teraz zrobi Pan takie wylicznaki dla wszystkich aminokwasów (i wszystkich kodonów)
+
+ 
+
+To wyjdzie taka niesymetryczna macierz substytucji opisująca jakie jest prawdopodobieństwo mutacji dowolnego aminokwasu. 
