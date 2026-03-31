@@ -1,0 +1,10 @@
+# 1. Ignore
+*.csv
+*.tsv
+*.txt
+*.xlsx
+
+# 2. Allow
+!macierz_mutacji.csv
+!macierz_prawdopodobienst_1_literowa.csv
+!TODO.txt

@@ -17,14 +17,20 @@ sub_matrix = pd.read_csv(SUB_MATRIX, index_col=0)
 def main():
     data = data_reader(FILE)
     res_data = []
+    only_possible = []
 
     for index, row in data.iterrows():
         wild, mutated = mutation(row)
         prob = sub_matrix.loc[wild, mutated]
         print(f'{prob}')
         res_data.append([prob, row.iloc[0], row.iloc[1], row.iloc[2], row.iloc[3], row.iloc[4], row.iloc[5], row.iloc[6]])
-    new_df = pd.DataFrame(res_data)
-    new_df.to_csv(f'results.tsv', sep='\t', index=False)
+        if prob != 0:
+            only_possible.append([prob, row.iloc[0], row.iloc[1], row.iloc[2], row.iloc[3], row.iloc[4], row.iloc[5], row.iloc[6]])
+    possible_df = pd.DataFrame(only_possible)
+    all_df = pd.DataFrame(res_data)
+
+    possible_df.to_csv(f'possible_results.tsv', sep='\t', index=False)
+    all_df.to_csv(f'all_prob_results.tsv', sep='\t', index=False)
 main()
 
 # collumn numbers meaning:
