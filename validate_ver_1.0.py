@@ -1,21 +1,37 @@
 import pandas as pd
 
-EXAMPLE_PROTEIN_SEQUENCE = "IALWMRLLPLLALLALWGPDPAAAFVNQHLCGSHLVEALYLVCGERGFFYTPKTRREAEDLQVGQVELGGGPGAGSLQPLALEGSLQKRGIVEQCCTSICSLYQLENYCN"
-TRUE_TEST_SEQUENCE = "IALWMRLLLLLALLALWGPDPAAAFVNQHLCGSHLVEALYLVCGERGFFYTPKTRREAEDLQVGQVELGGGPGAGSLQPLALEGSLQKRGIVEQCCTSICSLYQLENYCN"
+FILE = 'hs_can_sp_03_26_20260317_124231.tsv'
+SUB_MATRIX = 'macierz_prawdopodobienstw_1_literowa.csv'
 
-prob_matrix = pd.read_csv('macierz_prawdopodobienstw_1_literowa.csv', index_col=0)
+def data_reader(file_path: str) -> pd.DataFrame:
+    file = pd.read_csv(file_path, sep='\t')
+    return file
 
-def probability_of_existing(prot_seq: str, prob_matrix: pd.DataFrame) -> float:
-    probability = 1.0
+def mutation(data):
+    # return: [wild_type, mutated_type]
 
-    for id in range(len(prot_seq)):
-        if prot_seq[id] == TRUE_TEST_SEQUENCE[id]:
-            continue
-        else:
-            single_substitution_probability = prob_matrix.loc[prot_seq[id], TRUE_TEST_SEQUENCE[id]]
-            probability -= 1 - probability * single_substitution_probability
-            print(f'Difference at pos: {id} | canon: {TRUE_TEST_SEQUENCE[id]}, tested: {prot_seq[id]}')
-            print(f'Probability of this change with SNP: {single_substitution_probability}')
+    return [data.iloc[5], data.iloc[6]]
 
-    print(f'Probability of existing: {probability}')
-probability_of_existing(EXAMPLE_PROTEIN_SEQUENCE, prob_matrix)
+sub_matrix = pd.read_csv(SUB_MATRIX, index_col=0)
+
+def main():
+    data = data_reader(FILE)
+    res_data = []
+
+    for index, row in data.iterrows():
+        wild, mutated = mutation(row)
+        prob = sub_matrix.loc[wild, mutated]
+        print(f'{prob}')
+        res_data.append([prob, row.iloc[0], row.iloc[1], row.iloc[2], row.iloc[3], row.iloc[4], row.iloc[5], row.iloc[6]])
+    new_df = pd.DataFrame(res_data)
+    new_df.to_csv(f'results.tsv', sep='\t', index=False)
+main()
+
+# collumn numbers meaning:
+# 0 - peptide
+# 1 - target
+# 2 - match_begin
+# 3 - matxh_end
+# 4 - variant_position
+# 5 - wild_type
+# 6 - mutated_type
