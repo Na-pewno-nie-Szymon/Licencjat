@@ -38,7 +38,17 @@ Wykres słupkowy prezentujący 15 najczęściej występujących typów mutacji (
 ![Macierz Prawdopodobieństw mutacji SNP](V2/results_matrix_heatmap.png)
 
 ## Uruchomienie
+Aby uruchomić aplikację, należy przejść do folderu z odpowiednią wersją i wywołać skrypt podając plik z danymi (`.tsv`)
+```bash
+cd V2
+python3 validate_2.0.py -f path/to/file.tsv --save_fig --show_fig
+```
 
+## Pliki Wyjściowe
+* `_all.tsv` - Pełna baza z przypisanymi prawdopodobieństwami
+* `_possible.tsv` - Warianty odfiltrowane (tylko te, gdzie prawdopodobieństwo > 0)
+* Pliki graficzne `.png` (jeśli użyto flagi `--save_fig`)
+  
 ### Wymagania
 * Python 3.x
 * Biblioteki: `pandas`, `matplotlib`, `seaborn`, `tqdm`
