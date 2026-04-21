@@ -11,21 +11,20 @@ W **Pracowni Struktury Biopolimerów MWB** opracowano bazę danych [AliceDB](htt
 
 **Cel projektu:** Opracowanie metody odfiltrowania wyników fałszywie pozytywnych i ocena ich wiarygodności na podstawie prostych reguł funkcjonowania kodu genetycznego i prawdopodobieństwa wystąpienia danej mutacji.
 
-## Zawartość repozytorium
+### `V2/` (Wersja aktualna - Rekomendowana)
+Zawiera zaktualizowany skrypt analityczny z modułem generowania zaawansowanych statystyk i wykresów.
+* `validate_2.0.py` – Główny skrypt weryfikujący. Przetwarza duże pliki wynikowe z AliceDB (tryb *chunking*), dopisuje prawdopodobieństwa do mutacji i generuje wizualizacje.
+* `results_histogramy.png` / `results_top_mutacje.png` / `results_matrix_heatmap.png` – Wygenerowane wykresy z wynikami z bazy.
 
-W repozytorium znajdują się kluczowe pliki pozwalające na weryfikację zidentyfikowanych mutacji:
+### `V1/` (Wersja pierwotna)
+Zawiera historyczne wersje skryptów oraz macierz bazową:
+* `macierz_mutacji.csv` – Autorska macierz prawdopodobieństw podstawień aminokwasów, wskazująca szanse na konkretną mutację na podstawie kodu genetycznego.
+* `validate_ver_1.0.py` – Pierwotna wersja walidatora (bez modułu graficznego).
+* Skrypty pomocnicze (`mutation_matrix_1.py`, `mutation_matrix_3.py`).
 
-* `macierz_prawdopodobienstw_1_literowa.csv` – Macierz prawdopodobieństw podstawień (substytucji) aminokwasów, oparta na regułach kodu genetycznego. Wskazuje, z jakim prawdopodobieństwem dany aminokwas ("dziki" / *wild type*) może zmutować w inny w wyniku zmian na poziomie nukleotydów.
-* `validate_2.0.py` – Zaktualizowany skrypt weryfikujący. Przetwarza dane wyjściowe (pliki `.tsv`), przypisuje prawdopodobieństwa oraz generuje zaawansowane wizualizacje wyników.
+## Wizualizacja wyników (V2)
 
-## Jak działa walidator (wersja 2.0)?
-
-Skrypt ładuje plik z wynikami oraz macierz podstawień. Przetwarzanie odbywa się w paczkach (*chunks*), co pozwala na analizę bardzo dużych zbiorów danych SNP. Dla każdego wariantu:
-1. Ekstrahuje aminokwas oryginalny oraz zmutowany.
-2. Sprawdza prawdopodobieństwo zmiany w macierzy.
-3. Zapisuje wyniki do plików:
-   * `_all.tsv` – wszystkie warianty z przypisanym prawdopodobieństwem.
-   * `_possible.tsv` – tylko warianty o prawdopodobieństwie wyższym niż 0.
+Zastosowanie wersji 2.0 pozwala na szybką ocenę biologiczną i statystyczną wygenerowanych wyników.
 
 ### Wizualizacja i Statystyki
 Nowa wersja skryptu automatycznie generuje wykresy analityczne:
