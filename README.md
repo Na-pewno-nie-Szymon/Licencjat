@@ -15,24 +15,29 @@ W **Pracowni Struktury Biopolimerów MWB** opracowano bazę danych [AliceDB](htt
 
 W repozytorium znajdują się kluczowe pliki pozwalające na weryfikację zidentyfikowanych mutacji:
 
-* `macierz_mutacji.csv` – Autorska macierz prawdopodobieństw podstawień (substytucji) aminokwasów, oparta na regułach kodu genetycznego. Wskazuje, z jakim prawdopodobieństwem dany aminokwas ("dziki" / *wild type*) może zmutować w inny w wyniku zmian na poziomie nukleotydów.
-* `validate_ver_1.0.py` – Skrypt weryfikujący w języku Python. Przetwarza dane wyjściowe z identyfikacji (pliki `.tsv`), odczytuje mutacje i na podstawie macierzy przypisuje im prawdopodobieństwo wystąpienia.
+* `macierz_prawdopodobienstw_1_literowa.csv` – Macierz prawdopodobieństw podstawień (substytucji) aminokwasów, oparta na regułach kodu genetycznego. Wskazuje, z jakim prawdopodobieństwem dany aminokwas ("dziki" / *wild type*) może zmutować w inny w wyniku zmian na poziomie nukleotydów.
+* `validate_2.0.py` – Zaktualizowany skrypt weryfikujący. Przetwarza dane wyjściowe (pliki `.tsv`), przypisuje prawdopodobieństwa oraz generuje zaawansowane wizualizacje wyników.
 
-## Jak działa walidator (`validate_ver_1.0.py`)?
+## Jak działa walidator (wersja 2.0)?
 
-Skrypt ładuje plik z wynikami (np. `hs_can_sp_...tsv`) oraz macierz podstawień. Dla każdego zidentyfikowanego peptydu:
-1. Ekstrahuje aminokwas oryginalny (*wild type*) oraz zmutowany.
-2. Sprawdza prawdopodobieństwo takiej zmiany w `macierz_mutacji.csv`.
-3. Zapisuje wyniki do nowych plików `.csv`, dzieląc je na:
-   * **Wszystkie warianty** (wraz z przypisanym prawdopodobieństwem).
-   * **Warianty możliwe (possible)** – odfiltrowane tylko do tych, dla których prawdopodobieństwo mutacji jest większe niż `0`.
+Skrypt ładuje plik z wynikami oraz macierz podstawień. Przetwarzanie odbywa się w paczkach (*chunks*), co pozwala na analizę bardzo dużych zbiorów danych SNP. Dla każdego wariantu:
+1. Ekstrahuje aminokwas oryginalny oraz zmutowany.
+2. Sprawdza prawdopodobieństwo zmiany w macierzy.
+3. Zapisuje wyniki do plików:
+   * `_all.tsv` – wszystkie warianty z przypisanym prawdopodobieństwem.
+   * `_possible.tsv` – tylko warianty o prawdopodobieństwie wyższym niż 0.
+
+### Wizualizacja i Statystyki
+Nowa wersja skryptu automatycznie generuje wykresy analityczne:
+* **Rozkład prawdopodobieństw (Histogramy)**: Zestawienie skali liniowej i logarytmicznej. Skala logarytmiczna pozwala na dokładną analizę rzadkich, ale biologicznie dopuszczalnych wariantów.
+* **Analiza najczęstszych podstawień**: Wykres słupkowy prezentujący 15 najczęściej występujących typów mutacji (np. L -> I) w badanym zbiorze danych, co pozwala na szybką ocenę trendów biologicznych w bazie.
 
 ## Uruchomienie
 
 ### Wymagania
 * Python 3.x
-* Biblioteka `pandas`
+* Biblioteki: `pandas`, `matplotlib`, `seaborn`, `tqdm`
 
-Aby zainstalować wymagane pakiety, użyj:
+Instalacja wymaganych pakietów:
 ```bash
-pip install pandas
+pip install pandas matplotlib seaborn tqdm
