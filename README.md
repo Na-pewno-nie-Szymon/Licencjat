@@ -55,4 +55,4 @@ python3 validate_2.0.py -f path/to/file.tsv --save_fig --show_fig
 
 Instalacja wymaganych pakietów:
 ```bash
-pip install pandas matplotlib seaborn tqdm
+pip install -r requirements.txt
