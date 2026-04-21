@@ -29,8 +29,14 @@ Skrypt ładuje plik z wynikami oraz macierz podstawień. Przetwarzanie odbywa si
 
 ### Wizualizacja i Statystyki
 Nowa wersja skryptu automatycznie generuje wykresy analityczne:
-* **Rozkład prawdopodobieństw (Histogramy)**: Zestawienie skali liniowej i logarytmicznej. Skala logarytmiczna pozwala na dokładną analizę rzadkich, ale biologicznie dopuszczalnych wariantów.
-* **Analiza najczęstszych podstawień**: Wykres słupkowy prezentujący 15 najczęściej występujących typów mutacji (np. L -> I) w badanym zbiorze danych, co pozwala na szybką ocenę trendów biologicznych w bazie.
+* **Rozkład prawdopodobieństw (Histogramy)**: 
+![Wykres rozkładu prawdopodobieństw](V2/results_histogramy.png)
+Zestawienie skali liniowej i logarytmicznej. Skala logarytmiczna pozwala na dokładną analizę rzadkich, ale biologicznie dopuszczalnych wariantów.
+* **Analiza najczęstszych podstawień**: 
+![Wykres najczęstszych mutacji](V2/results_top_mutacje.png)
+Wykres słupkowy prezentujący 15 najczęściej występujących typów mutacji (np. L -> I) w badanym zbiorze danych, co pozwala na szybką ocenę trendów biologicznych w bazie.
+* **Macierz Prawdopodobieństw mutacji SNP**
+![Macierz Prawdopodobieństw mutacji SNP](V2/results_matrix_heatmap.png.png)
 
 ## Uruchomienie
 
