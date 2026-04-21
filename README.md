@@ -36,7 +36,7 @@ Zestawienie skali liniowej i logarytmicznej. Skala logarytmiczna pozwala na dok�
 ![Wykres najczęstszych mutacji](V2/results_top_mutacje.png)
 Wykres słupkowy prezentujący 15 najczęściej występujących typów mutacji (np. L -> I) w badanym zbiorze danych, co pozwala na szybką ocenę trendów biologicznych w bazie.
 * **Macierz Prawdopodobieństw mutacji SNP**
-![Macierz Prawdopodobieństw mutacji SNP](V2/results_matrix_heatmap.png.png)
+![Macierz Prawdopodobieństw mutacji SNP](V2/results_matrix_heatmap.png)
 
 ## Uruchomienie
 
