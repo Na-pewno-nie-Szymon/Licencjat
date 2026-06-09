@@ -7,16 +7,18 @@ from tqdm import tqdm
 SUB_MATRIX = 'macierz_prawdopodobienstw_1_literowa.csv'
 CHUNK_SIZE = 10000
 
-def generate_plots(input_file: str, output_prefix: str, save_fig: bool, show_fig: bool):
+def generate_plots(input_file: str, input_nonzero_file: str, output_prefix: str, save_fig: bool, show_fig: bool):
     """Generuje zaawansowane wykresy na podstawie przetworzonych danych."""
     print('\nGenerowanie ulepszonych wykresów wizualizujących wyniki...')
     try:
         # typ mutacji
         df = pd.read_csv(input_file, sep='\t')
+        df_nz = pd.read_csv(input_nonzero_file, sep='\t')
         
-        col_wild = df.columns[5]
-        col_mut = df.columns[6]
-        df['Mutation_Type'] = df[col_wild].astype(str) + ' -> ' + df[col_mut].astype(str)
+
+        # Tworzymy kolumnę Mutation_Type dla OBU ramek danych
+        df['Mutation_Type'] = df['wild_type'].astype(str) + ' -> ' + df['mutated_type'].astype(str)
+        df_nz['Mutation_Type'] = df_nz['wild_type'].astype(str) + ' -> ' + df_nz['mutated_type'].astype(str)
 
         sns.set_theme(style='whitegrid')
         
@@ -47,7 +49,7 @@ def generate_plots(input_file: str, output_prefix: str, save_fig: bool, show_fig
         plt.figure(figsize=(12, 6))
         
         # Zliczamy najczęstsze typy mutacji w pliku i bierzemy 15 pierwszych
-        top_mutations = df['Mutation_Type'].value_counts().head(15)
+        top_mutations = df_nz['Mutation_Type'].value_counts().head(15)
         
         # Tworzymy wykres słupkowy
         sns.barplot(x=top_mutations.values, y=top_mutations.index, palette='viridis', hue=top_mutations.index, legend=False)
@@ -90,9 +92,9 @@ def main():
         return
 
     def get_probability(row):
-        # Pobieranie aminokwasów z odpowiednich kolumn (indeksy 5 i 6 według oryginału)
-        wild = row.iloc[5]
-        mutated = row.iloc[6]
+        # Pobieranie aminokwasów z odpowiednich kolumn 
+        wild = row['wild_type']
+        mutated = row['mutated_type'] #
         
         # Zabezpieczenie przed brakującymi danymi lub dziwnymi znakami z bazy
         if wild in sub_matrix.index and mutated in sub_matrix.columns:
@@ -137,7 +139,7 @@ def main():
     print("\nZakończono analizę i zapis plików TSV!")
     
     # Przekazujemy plik "_all.tsv" do nowej funkcji rysującej wykresy
-    generate_plots(file_all, prefix, args.save_fig, args.show_fig)
+    generate_plots(file_all, file_possible, prefix, args.save_fig, args.show_fig)
     print("Skrypt zakończył działanie pomyślnie!")
 
 if __name__ == "__main__":
